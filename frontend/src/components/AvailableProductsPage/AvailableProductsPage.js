@@ -142,7 +142,7 @@ function AvailableProductsPage() {
             {product.video && (
               <video
                 controls
-                src={product.video} // Video URL comes from the backend
+                src={`http://localhost:5000/${product.video}`} // Build full URL from relative path
                 style={{ width: '100%', marginTop: '10px', borderRadius: '8px' }}
                 type="video/mp4"
               >

@@ -156,7 +156,7 @@ function AddProductsPage() {
                 checked={product.unit === 'kg'}
                 onChange={handleChange}
               />
-              Kilograms (kg)
+              <span>Kilograms (kg)</span>
             </label>
             <label>
               <input
@@ -166,7 +166,7 @@ function AddProductsPage() {
                 checked={product.unit === 'number'}
                 onChange={handleChange}
               />
-              Number
+              <span>Number</span>
             </label>
           </div>
         </div>

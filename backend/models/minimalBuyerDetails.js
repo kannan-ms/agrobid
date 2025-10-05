@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const buyerDetailsSchema = new mongoose.Schema({
   buyerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'BuyerDetails',
+    ref: 'Customer',
     required: true,
     unique: true,
   },

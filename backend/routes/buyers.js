@@ -43,9 +43,9 @@ router.get('/product/:productId/buyers', authenticateToken, async (req, res) => 
     const buyerIds = [...new Set(bids.map((bid) => bid.buyerId))];
 
     // Fetch details of all buyers who placed bids
-    const buyers = await Buyer.find({ _id: { $in: buyerIds } }).select(
-      'name email phone location address'
-    ); // Include only specific fields
+    const buyers = await Buyer.find({ buyerId: { $in: buyerIds } }).select(
+      'buyerId phone address'
+    ).populate('buyerId', 'name email'); // Include only specific fields
 
     res.status(200).json({ buyers });
   } catch (error) {

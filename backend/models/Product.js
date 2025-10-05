@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema({
   },
   farmerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'FarmerDetails',
+    ref: 'Customer',
     required: true, // Reference to the farmer adding the product
   },
   duration: {

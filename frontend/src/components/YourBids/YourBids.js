@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import{ jwtDecode } from "jwt-decode"; // Correct import for jwt-decode
+import { jwtDecode } from "jwt-decode"; // Correct import for jwt-decode
 import "./YourBids.css";
 
 const YourBidsPage = () => {

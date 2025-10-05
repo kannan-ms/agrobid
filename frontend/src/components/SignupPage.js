@@ -31,7 +31,7 @@ function SignupPage() {
     if (!name) formErrors.name = 'Name is required';
     if (!age || isNaN(age) || age <= 0) formErrors.age = 'Valid age is required';
     if (!email || !/\S+@\S+\.\S+/.test(email)) formErrors.email = 'Email is invalid';
-    if (!password || password.length < 8) formErrors.password = 'Password must be at least 8 characters long';
+    if (!password || password.length < 6) formErrors.password = 'Password must be at least 6 characters long';
     if (role !== 'farmer' && role !== 'buyer') formErrors.role = 'Role is required';
 
     setErrors(formErrors);

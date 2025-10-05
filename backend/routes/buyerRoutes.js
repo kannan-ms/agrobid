@@ -3,8 +3,7 @@ const authenticateToken = require('../middleware/auth');
 const Customer = require('../models/Customer');
 const Product = require('../models/Product');
 const BuyerDetails = require('../models/BuyerDetails'); // Import BuyerDetails schema
-
-// const Bid = require('../models/Bid');
+const Bid = require('../models/Bid');
 
 const router = express.Router();
 

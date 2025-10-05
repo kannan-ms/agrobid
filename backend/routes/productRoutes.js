@@ -56,7 +56,8 @@ router.post('/add-product', authenticateToken, upload.single('video'), async (re
       quantity,
       category,
       unit,
-      video: req.file.path, // Save the video file path
+      // Store relative path under uploads so client can build full URL
+      video: path.join('uploads', path.basename(req.file.path)),
       farmerId,
       duration,
     });
