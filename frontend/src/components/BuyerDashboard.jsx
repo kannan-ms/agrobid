@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './BuyerDashboard.css'; // Import the CSS file
 
 function BuyerDashboard() {
   const [buyerName, setBuyerName] = useState('');
@@ -42,21 +41,26 @@ function BuyerDashboard() {
   };
 
   return (
-    <div className="buyer-dashboard">
+    <div>
       {/* Navbar Section */}
-      <nav className="navbar">
-        <ul>
-          <li><a href="/available-products">Available Products</a></li>
-          <li><a href="/your-bids">Your Bids</a></li>
-          <li><a href="/add-buyer-details">Add Details</a></li>
-          <li>
-            <button onClick={handleLogout} className="logout-btn">Logout</button>
-          </li>
-        </ul>
+      <nav className="bg-blue-600 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <span className="text-2xl font-bold">Buyer Portal</span>
+            <ul className="flex space-x-6 items-center">
+              <li><a className="hover:text-blue-200 transition" href="/available-products">Available Products</a></li>
+              <li><a className="hover:text-blue-200 transition" href="/your-bids">Your Bids</a></li>
+              <li><a className="hover:text-blue-200 transition" href="/add-buyer-details">Add Details</a></li>
+              <li><button onClick={handleLogout} className="border border-white px-4 py-2 rounded hover:bg-white hover:text-blue-600 transition">Logout</button></li>
+            </ul>
+          </div>
+        </div>
       </nav>
 
       {/* Buyer Dashboard Content */}
-      <h1>Welcome, {buyerName}</h1>
+      <div className="max-w-7xl mx-auto px-4 my-12">
+        <h1 className="text-5xl font-bold">Welcome, {buyerName}</h1>
+      </div>
     </div>
   );
 }

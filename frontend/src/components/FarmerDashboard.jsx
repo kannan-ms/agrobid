@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './FarmerDashboard.css';
 
 function FarmerDashboard() {
   const [farmerName, setFarmerName] = useState('');
-  const [farmerDetails, setFarmerDetails] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,13 +34,13 @@ function FarmerDashboard() {
       });
 
     // Fetch farmer additional details (location, phone, address)
+    // Note: Details are fetched but not displayed in this dashboard
     axios
       .get('http://localhost:5000/api/farmer/details', { 
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        setFarmerDetails(response.data);
-        console.log("Farmer Details:", response.data);
+        // Farmer details available if needed in future
       })
       .catch(error => {
         console.error('Error fetching farmer details:', error);
@@ -56,17 +54,24 @@ function FarmerDashboard() {
   };
 
   return (
-    <div className="farmer-dashboard">
-      <nav className="navbar">
-        <ul>
-          <li><a href="/add-product">Add Products</a></li>
-          <li><a href="/view-products">View Products</a></li>
-          <li><a href="/add-details">Add Details</a></li> {/* Link to Add Details Page */}
-          <li><button onClick={handleLogout} className="logout-btn">Logout</button></li>
-        </ul>
+    <div>
+      <nav className="bg-green-600 text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <span className="text-2xl font-bold">Farmer Portal</span>
+            <ul className="flex space-x-6 items-center">
+              <li><a className="hover:text-green-200 transition" href="/add-product">Add Products</a></li>
+              <li><a className="hover:text-green-200 transition" href="/view-products">View Products</a></li>
+              <li><a className="hover:text-green-200 transition" href="/add-details">Add Details</a></li>
+              <li><button onClick={handleLogout} className="border border-white px-4 py-2 rounded hover:bg-white hover:text-green-600 transition">Logout</button></li>
+            </ul>
+          </div>
+        </div>
       </nav>
 
-      <h1>Welcome, {farmerName}</h1>
+      <div className="max-w-7xl mx-auto px-4 my-12">
+        <h1 className="text-5xl font-bold">Welcome, {farmerName}</h1>
+      </div>
 
       {/* Display Farmer Details */}
       {/* <div className="farmer-details">

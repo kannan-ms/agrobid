@@ -30,7 +30,7 @@ app.use('/uploads', (req, res, next) => {
 }, express.static(path.join(__dirname, 'uploads')));
 // MongoDB connection
 const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/AgroBidding';
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -60,7 +60,7 @@ app.use('/api/availableProducts', availableProductRoutes); // New route for avai
 // );
 // Welcome route
 app.get('/api/welcome', (req, res) => {
-  res.json({ message: 'Welcome to AgroBidding API!' });
+  res.json({ message: 'Welcome to AgroBidding' });
 });
 
 // Start the server

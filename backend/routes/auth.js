@@ -69,7 +69,6 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
-    console.log('Generated token:', token);
     // Respond with the token and user role
     res.status(200).json({ token, role: user.role, farmerName: user.name });
   } catch (error) {
