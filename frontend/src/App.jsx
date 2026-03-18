@@ -12,6 +12,10 @@ import YourBids from './components/YourBids.jsx'; // Your Bids Page
 import AddFarmerDetailsPage from './components/AddFarmerDetailsPage.jsx';
 import AddBuyerDetailsPage from './components/AddBuyerDetailsPage.jsx'; // Import the AddBuyerDetailsPage component
 import ForgotPasswordPage from './components/ForgotPasswordPage.jsx'; // Import the new page
+import WebSocketNotifications from './components/WebSocketNotifications.jsx';
+import ChatBox from './components/ChatBox.jsx';
+import UserProfile from './components/UserProfile.jsx';
+import { NotificationProvider } from './components/GlobalNotification.jsx';
 
 //import heroAgriculture from './assets/Images/dalle.webp';
 
@@ -30,28 +34,36 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        {/* Welcome message */}
-        <h1 className="text-center my-8 text-3xl font-bold">{message}</h1>
+    <NotificationProvider>
+      <Router>
+        <div className="App">
+          {/* Real-time notifications */}
+          <WebSocketNotifications />
 
-        {/* Define Routes */}
-        <Routes>
-          <Route path="/" element={<Home />} /> {/* Home route with Login and Signup buttons */}
-          <Route path="/signup" element={<SignupPage />} /> {/* Signup Page */}
-          <Route path="/login" element={<LoginPage />} /> {/* Login Page */}
-          <Route path="/farmer-dashboard" element={<FarmerDashboard />} /> {/* Farmer Dashboard */}
-          <Route path="/buyer-dashboard" element={<BuyerDashboard />} /> {/* Buyer Dashboard */}
-          <Route path="/add-product" element={<AddProductPage />} /> {/* Add Product Page */}
-          <Route path="/view-products" element={<ViewProductsPage />} /> {/* View Products Page */}
-          <Route path="/available-products" element={<AvailableProducts />} /> {/* Available Products Page */}
-          <Route path="/your-bids" element={<YourBids />} /> {/* Your Bids Page */}
-          <Route path="/add-details" element={<AddFarmerDetailsPage />} />
-          <Route path="/add-buyer-details" element={<AddBuyerDetailsPage />} /> {/* Add Buyer Details */}
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-        </Routes>
-      </div>
-    </Router>
+          {/* Welcome message */}
+          <h1 className="text-center my-8 text-3xl font-bold">{message}</h1>
+
+          {/* Define Routes */}
+          <Routes>
+            <Route path="/" element={<Home />} /> {/* Home route with Login and Signup buttons */}
+            <Route path="/signup" element={<SignupPage />} /> {/* Signup Page */}
+            <Route path="/login" element={<LoginPage />} /> {/* Login Page */}
+            <Route path="/farmer-dashboard" element={<FarmerDashboard />} /> {/* Farmer Dashboard */}
+            <Route path="/buyer-dashboard" element={<BuyerDashboard />} /> {/* Buyer Dashboard */}
+            <Route path="/add-product" element={<AddProductPage />} /> {/* Add Product Page */}
+            <Route path="/view-products" element={<ViewProductsPage />} /> {/* View Products Page */}
+            <Route path="/available-products" element={<AvailableProducts />} /> {/* Available Products Page */}
+            <Route path="/your-bids" element={<YourBids />} /> {/* Your Bids Page */}
+            <Route path="/add-details" element={<AddFarmerDetailsPage />} />
+            <Route path="/add-buyer-details" element={<AddBuyerDetailsPage />} /> {/* Add Buyer Details */}
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/profile" element={<UserProfile role={"farmer"} />} />
+            {/* Demo chat route: replace with real user IDs */}
+            <Route path="/chat-demo" element={<ChatBox myId={"buyerId1"} otherId={"farmerId1"} />} />
+          </Routes>
+        </div>
+      </Router>
+    </NotificationProvider>
   );
 }
 

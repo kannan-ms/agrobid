@@ -14,6 +14,7 @@ const productsRoute = require('./routes/products');
 const bidsRoute = require('./routes/bids');
 const buyersRoute = require('./routes/buyers');
 const availableProductRoutes = require('./routes/availableProducts'); // Updated path to the new file
+const chatRoute = require('./routes/chat'); // Chat route
 const path = require('path');
 const mime = require('mime');
 //const helmet = require('helmet');
@@ -29,7 +30,7 @@ app.use('/uploads', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'uploads')));
 // MongoDB connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/AgroBidding';
+const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://agroProj:kannan2030@kannan.qij5fmf.mongodb.net/?appName=Kannan';
 mongoose.connect(mongoURI)
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
@@ -45,6 +46,7 @@ app.use('/api/products', productsRoute);
 app.use('/api/bids', bidsRoute);
 app.use('/api/buyers', buyersRoute);
 app.use('/api/availableProducts', availableProductRoutes); // New route for available products
+app.use('/api/chat', chatRoute); // Chat route
 // app.use(
 //   helmet({
 //     contentSecurityPolicy: {
@@ -63,6 +65,68 @@ app.get('/api/welcome', (req, res) => {
   res.json({ message: 'Welcome to AgroBidding' });
 });
 
-// Start the server
+
+// WebSocket setup
+const http = require('http');
+const WebSocket = require('ws');
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = http.createServer(app);
+
+// Create WebSocket server on the same HTTP server
+const wss = new WebSocket.Server({ server });
+
+
+// Broadcast helper
+function broadcast(data) {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(data));
+    }
+  });
+}
+
+// Export broadcast for use in routes
+app.locals.broadcast = broadcast;
+
+wss.on('connection', (ws) => {
+  console.log('WebSocket client connected');
+
+  ws.on('message', async (message) => {
+    try {
+      const data = JSON.parse(message);
+      // Chat message handling
+      if (data.type === 'chat' && data.senderId && data.receiverId && data.message) {
+        // Save chat message to DB
+        const ChatMessage = require('./models/ChatMessage');
+        const chatMsg = new ChatMessage({
+          senderId: data.senderId,
+          receiverId: data.receiverId,
+          message: data.message,
+        });
+        await chatMsg.save();
+        // Broadcast only to relevant clients (for demo, broadcast to all)
+        broadcast({
+          type: 'chat',
+          senderId: data.senderId,
+          receiverId: data.receiverId,
+          message: data.message,
+          timestamp: chatMsg.timestamp,
+        });
+      } else {
+        // Other message types (fallback: broadcast)
+        broadcast({ type: 'broadcast', payload: data });
+      }
+    } catch (e) {
+      ws.send(JSON.stringify({ type: 'error', message: 'Invalid JSON' }));
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket client disconnected');
+  });
+
+  ws.send(JSON.stringify({ type: 'welcome', message: 'WebSocket connection established' }));
+});
+
+server.listen(PORT, () => console.log(`Server running (HTTP+WebSocket) on port ${PORT}`));

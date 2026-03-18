@@ -23,13 +23,11 @@ function LoginPage() {
       });
   
       if (response.status === 200) {
-        alert('Login successful');
-        console.log(response.data.role); 
         // Store the token in localStorage
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('role', response.data.role);
         localStorage.setItem('farmerName', response.data.farmerName);
-  
+
         // Redirect based on the role
         if (response.data.role === 'farmer') {
           navigate('/farmer-dashboard');

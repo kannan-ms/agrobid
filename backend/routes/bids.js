@@ -41,6 +41,13 @@ router.post('/bid', authenticateToken, async (req, res) => {
       existingBid.amount = amount;
       await existingBid.save();
 
+      // WebSocket notification for updated bid
+      req.app.locals.broadcast({
+        type: 'bid-update',
+        message: 'Bid updated successfully!',
+        bid: existingBid
+      });
+
       return res.status(200).json({ message: 'Bid updated successfully!', bid: existingBid });
     }
 
@@ -53,6 +60,13 @@ router.post('/bid', authenticateToken, async (req, res) => {
 
     // Save the bid to the database
     await newBid.save();
+
+    // WebSocket notification for new bid
+    req.app.locals.broadcast({
+      type: 'bid-new',
+      message: 'Bid placed successfully!',
+      bid: newBid
+    });
 
     res.status(201).json({ message: 'Bid placed successfully!', bid: newBid });
   } catch (error) {

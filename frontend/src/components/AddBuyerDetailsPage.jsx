@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNotification } from './GlobalNotification';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function AddBuyerDetailsPage() {
   const [details, setDetails] = useState({ location: '', phone: '', address: '' });
   const navigate = useNavigate();
+  const { showNotification } = useNotification();
 
   // Handle input change
   const handleInputChange = (e) => {
@@ -17,7 +19,7 @@ function AddBuyerDetailsPage() {
     const token = localStorage.getItem('token'); // Get token from local storage
 
     if (!details.location || !details.phone || !details.address) {
-      alert('Please fill in all fields.');
+      showNotification('Please fill in all fields.', 'error');
       return;
     }
 
@@ -29,12 +31,12 @@ function AddBuyerDetailsPage() {
         },
       })
       .then((response) => {
-        alert(response.data.message || 'Details saved successfully!');
+        showNotification(response.data.message || 'Details saved successfully!', 'success');
         navigate('/available-products'); // Redirect to the available products page
       })
       .catch((error) => {
         console.error('Error saving details:', error);
-        alert(error.response?.data?.message || 'Failed to save details.');
+        showNotification(error.response?.data?.message || 'Failed to save details.', 'error');
       });
   };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNotification } from './GlobalNotification';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,9 +35,10 @@ function BuyerDashboard() {
       });
   }, [navigate]);
   
+  const { showNotification } = useNotification();
   const handleLogout = () => {
     localStorage.removeItem('token'); // Clear token on logout
-    alert('You have been logged out.');
+    showNotification('You have been logged out.', 'success');
     navigate('/login');
   };
 
@@ -51,6 +53,7 @@ function BuyerDashboard() {
               <li><a className="hover:text-blue-200 transition" href="/available-products">Available Products</a></li>
               <li><a className="hover:text-blue-200 transition" href="/your-bids">Your Bids</a></li>
               <li><a className="hover:text-blue-200 transition" href="/add-buyer-details">Add Details</a></li>
+              <li><a className="hover:text-blue-200 transition font-semibold" href="/profile">Profile</a></li>
               <li><button onClick={handleLogout} className="border border-white px-4 py-2 rounded hover:bg-white hover:text-blue-600 transition">Logout</button></li>
             </ul>
           </div>

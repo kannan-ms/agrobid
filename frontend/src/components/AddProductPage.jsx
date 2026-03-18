@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNotification } from './GlobalNotification';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +16,7 @@ function AddProductsPage() {
 
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     // Check if farmer details are filled
@@ -28,12 +30,12 @@ function AddProductsPage() {
         });
         console.log(response.data.detailsFilled);
         if (!response.data.detailsFilled) {
-          alert('Please fill in your details before adding a product.');
+          showNotification('Please fill in your details before adding a product.', 'error');
           navigate('/add-details'); // Redirect to Add Details page
         }
       } catch (err) {
         console.error('Error checking farmer details:', err);
-        alert('Error verifying your details. Please try again.');
+        showNotification('Error verifying your details. Please try again.', 'error');
         navigate('/add-details'); // Redirect as fallback
       }
     };
@@ -80,11 +82,11 @@ function AddProductsPage() {
         },
       });
 
-      alert(response.data.message || 'Product added successfully!');
+      showNotification(response.data.message || 'Product added successfully!', 'success');
       navigate('/view-products'); // Redirect to products page
     } catch (err) {
       console.error('Error adding product:', err);
-      alert(err.response?.data?.message || 'Failed to add product.');
+      showNotification(err.response?.data?.message || 'Failed to add product.', 'error');
     }
   };
 

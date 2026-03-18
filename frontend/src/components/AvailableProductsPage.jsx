@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNotification } from './GlobalNotification';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 
@@ -8,6 +9,7 @@ function AvailableProductsPage() {
   const [categories, setCategories] = useState([]); // To store categories for filter
   const [selectedCategory, setSelectedCategory] = useState('All'); // Default to 'All'
   const navigate = useNavigate();
+  const { showNotification } = useNotification();
 
   useEffect(() => {
     // Check if buyer details are complete
@@ -20,12 +22,12 @@ function AvailableProductsPage() {
 
         if (!response.data.detailsFilled) {
           // Redirect to AddBuyerDetailsPage if details are incomplete
-          alert('Please complete your profile details before proceeding.');
+          showNotification('Please complete your profile details before proceeding.', 'error');
           navigate('/add-buyer-details');
         }
       } catch (error) {
         console.error('Error checking buyer details:', error);
-        alert('Error verifying your details. Please log in again.');
+        showNotification('Error verifying your details. Please log in again.', 'error');
       }
     };
 
@@ -72,7 +74,7 @@ function AvailableProductsPage() {
   const handleBidSubmit = async (productId) => {
     const amount = bidAmount[productId];
     if (!amount || amount <= 0) {
-      alert('Please enter a valid bid amount');
+      showNotification('Please enter a valid bid amount', 'error');
       return;
     }
 
@@ -83,10 +85,10 @@ function AvailableProductsPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-      alert('Bid placed successfully!');
+      showNotification('Bid placed successfully!', 'success');
     } catch (error) {
       console.error('Error placing bid:', error);
-      alert('Failed to place bid.');
+      showNotification('Failed to place bid.', 'error');
     }
   };
 

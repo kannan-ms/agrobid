@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNotification } from './GlobalNotification';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -47,9 +48,10 @@ function FarmerDashboard() {
       });
   }, [navigate]);
 
+  const { showNotification } = useNotification();
   const handleLogout = () => {
     localStorage.removeItem('token'); // Clear token on logout
-    alert('You have been logged out.');
+    showNotification('You have been logged out.', 'success');
     navigate('/login');
   };
 
@@ -63,6 +65,7 @@ function FarmerDashboard() {
               <li><a className="hover:text-green-200 transition" href="/add-product">Add Products</a></li>
               <li><a className="hover:text-green-200 transition" href="/view-products">View Products</a></li>
               <li><a className="hover:text-green-200 transition" href="/add-details">Add Details</a></li>
+              <li><a className="hover:text-green-200 transition font-semibold" href="/profile">Profile</a></li>
               <li><button onClick={handleLogout} className="border border-white px-4 py-2 rounded hover:bg-white hover:text-green-600 transition">Logout</button></li>
             </ul>
           </div>
