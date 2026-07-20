@@ -127,7 +127,7 @@ AgroBid/
 
 ## Contributing
 
-We welcome contributions! To contribute:
+I welcome contributions! To contribute:
 
 1. Fork the repository.
 2. Create a new branch:
@@ -143,15 +143,7 @@ We welcome contributions! To contribute:
     git push origin feature-name
     ```
 5. Submit a pull request.
-
 ---
-
-## License
-
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
----
-
 ## Acknowledgments
 
 Special thanks to everyone who contributed to this project and supported its development.
