@@ -41,7 +41,7 @@ AgroBid is a modern web application designed to streamline the process of buying
 
 ### Frontend:
 - React.js
-- CSS/Bootstrap for styling
+- CSS for styling
 
 ### Backend:
 - Node.js with Express.js
