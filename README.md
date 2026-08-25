@@ -122,27 +122,6 @@ AgroBid/
 ├── package.json        # Project dependencies
 └── README.md           # Project documentation
 ```
-
----
-
-## Contributing
-
-I welcome contributions! To contribute:
-
-1. Fork the repository.
-2. Create a new branch:
-    ```bash
-    git checkout -b feature-name
-    ```
-3. Make your changes and commit them:
-    ```bash
-    git commit -m "Description of changes"
-    ```
-4. Push to your forked repository:
-    ```bash
-    git push origin feature-name
-    ```
-5. Submit a pull request.
 ---
 ## Acknowledgments
 
